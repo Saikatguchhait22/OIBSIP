@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Login Authentication</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: linear-gradient(#72f9d1, rgb(208, 221, 112));
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 69px;
+        }
+
+        .form-container {
+            background-color: #b2b4fa;
+            border: 1px solid #d4a8c5;
+            padding: 22px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #loginForm {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to our website</h1>
+
+        <div class="form-container" id="registrationForm">
+            <h2>Register</h2>
+            <input type="text" id="registerUsername" placeholder="Username"><br>
+            <input type="password" id="registerPassword" placeholder="Password"><br>
+            <button onclick="register()">Register</button>
+        </div>
+
+        <div class="form-container" id="loginForm">
+            <h2>Login</h2>
+            <input type="text" id="loginUsername" placeholder="Username"><br>
+            <input type="password" id="loginPassword" placeholder="Password"><br>
+            <button onclick="login()">Login</button>
+        </div>
+
+        <div id="securedPage" style="display: none;">
+            <h2>Secured Page</h2>
+            <p>Congratulations! You have access to the secured page.</p>
+        </div>
+    </div>
+
+    <script>
+        // User database (simple object)
+        const userDatabase = {};
+
+        function register() {
+            const registerUsername = document.getElementById("registerUsername").value;
+            const registerPassword = document.getElementById("registerPassword").value;
+
+            if (registerUsername && registerPassword) {
+                userDatabase[registerUsername] = registerPassword;
+                alert("Registration successful!");
+                clearFields("register");
+                // Show the login form after successful registration
+                document.getElementById("registrationForm").style.display = "none";
+                document.getElementById("loginForm").style.display = "block";
+            } else {
+                alert("Please fill in both username and password fields.");
+            }
+        }
+
+        function login() {
+            const loginUsername = document.getElementById("loginUsername").value;
+            const loginPassword = document.getElementById("loginPassword").value;
+
+            if (userDatabase.hasOwnProperty(loginUsername) && userDatabase[loginUsername] === loginPassword) {
+                alert("Login successful!");
+                clearFields("login");
+                // Show the secured page after successful login
+                document.getElementById("loginForm").style.display = "none";
+                document.getElementById("securedPage").style.display = "block";
+            } else {
+                alert("Incorrect username or password. Please try again.");
+                clearFields("login");
+            }
+        }
+
+        function clearFields(formName) {
+            document.getElementById(`${formName}Username`).value = "";
+            document.getElementById(`${formName}Password`).value = "";
+        }
+    </script>
+</body>
+</html>
+
+
+
